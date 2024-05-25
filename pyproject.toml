@@ -1,0 +1,26 @@
+[build-system]
+requires      = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "osbee"
+version = "1.0.0"
+description = "Connect to your OSBee 3-valve controller's REST API"
+readme = "README.md"
+authors = [{ name = "Allan Clark", email = "allanc@chickenandpork.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["osbee", "opensprinkler"]
+# yup, pure bog-standard python
+dependencies = []
+#requires-python = ">=3.9"
+
+[project.optional-dependencies]
+dev = [ "black" ]
+
+[project.urls]
+Homepage = "https://github.com/chickenandpork/osbee"
