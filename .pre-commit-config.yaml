@@ -1,0 +1,47 @@
+# To install the dependencies for this file:
+# 1) pip install pre-commit
+#   (really, "sudo python3 -m pip install pre-commit")
+#   (really, I've been carrying this boilerplate for years, but now it's all python3?)
+#
+# 2) pre-commit install --allow-missing-config
+#
+# yamllint checks this .pre-commit-config file as well
+
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+repos:
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args: ["-d", "{extends: relaxed, rules: {line-length: {max: 120}}}"]
+  # Enforce that commit messages are semantic-commits, compatible with release-please
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.27.0
+    hooks:
+      - id: commitizen
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: no-commit-to-branch
+      - id: trailing-whitespace
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+        language_version: python3
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.28.4
+    hooks:
+      - id: check-github-workflows
+      - id: check-renovate
+  - repo: https://github.com/streetsidesoftware/cspell-cli
+    rev: v8.8.2
+    hooks:
+      - id: cspell
+        # a local allowlist of dictionary words in .github/cspell.yaml.  This can get comical --
+        # adding new words in every PR -- but the cost/benefit balance may avoid some embarassing
+        # typos
+        args: ["--config", ".github/cspell.yaml"]
+        types: [file, markdown]

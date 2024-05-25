@@ -1,0 +1,26 @@
+---
+# cSpell Settings
+
+# Done in YAML rather than JSON because -- like XML -- there is a cleary-documented way to write
+# comments that don't hit-or-miss fail on some parsers.  Some folks felt we were miles ahead of XML
+# with JSON; someday, JSON will even reach parity!
+
+version: "0.2"
+
+# flagWords - list of words to be always considered incorrect
+# This is useful for offensive words and common spelling errors.
+# For example "hte" should be "the"
+flagWords:
+  - hte
+  - ot
+
+language: en
+
+# words - list of words to be always considered correct: an Allowlist per-se
+words:
+  - allanc
+  - bitrot
+  - chickenandpork
+  - kwargs
+  - osbee
+  - srcs
