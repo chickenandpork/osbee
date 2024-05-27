@@ -8,17 +8,19 @@
   ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["patch", "minor"],
-      "automerge": true
+      "automerge": true,
+      "matchUpdateTypes": ["patch", "minor"]
     }
   ],
   "regexManagers": [
-   {
-     "fileMatch": [".github/workflows/.*.yml"],
+    {
+      "fileMatch": [".github/workflows/.*.yml"],
       "matchStrings": [
         "renovatebot datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?_VERSION: (?<currentValue>.*)\\s"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}"
     }
-  ]
+  ],
+  "semanticCommitScope": "",
+  "semanticCommitType": "deps"
 }
