@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/chickenandpork/osbee/compare/v0.1.0...v0.1.1) (2024-05-27)
+
+
+### Documentation
+
+* Slightly more docs about the methods of the OSBee class ([b5faf34](https://github.com/chickenandpork/osbee/commit/b5faf3467023540c8105602f640b91d31c675ad7))
+
 ## 0.1.0 (2024-05-27)
 
 
