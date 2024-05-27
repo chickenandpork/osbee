@@ -35,7 +35,13 @@ class OSBeeAPI:
         )
 
     async def fetch_data(self, index):
-        """Get raw device state from the OSBee Hub via API.  No authentication yet considered."""
+        """Get raw device state from the OSBee Hub via API.  No authentication yet considered.
+
+        Essentially,the unprotected result of hitting your OSBee with GET http://{IP}/jc with a
+        text/json content-type (OSBee-1.0.0; firmware-1.0.2 seems to offer application.json) and
+        contains the status of the device.
+        """
+
         _LOGGER.debug("Fetch_data from %s with index %s", self._host, index)
         async with self._session.get(f"http://{self._host}/jc") as jc_request:
             if jc_request.status == 401:
@@ -68,7 +74,13 @@ class OSBeeAPI:
             return jc_body  # the resulting structure has no conventional "data" element, just raw JSON
 
     async def async_turn_off(self, zone_id):
-        """Async entry point to deactivate the valve/relay for the zone."""
+        """Async entry point to deactivate the valve/relay for the zone.
+
+        Based on the current status of the device, this method creates a new determination of
+        active valves as bit-fields, and pushes the new list of active valves as a new manual
+        program running those valves, replacing the current manual program.  This has the effect of
+        turning off the given valve.
+        """
 
         if not self._jc_cache:
             # too soon: status not yet pulled somehow
@@ -85,7 +97,13 @@ class OSBeeAPI:
         return await self.async_apply_state()
 
     async def async_turn_on(self, zone_id):
-        """Async entry point to activate the valve/relay for the zone."""
+        """Async entry point to activate the valve/relay for the zone.
+
+        Based on the current status of the device, this method creates a new determination of
+        active valves as bit-fields, and pushes the new list of active valves as a new manual
+        program running those valves, replacing the current manual program.  This has the effect of
+        turning off the given valve.
+        """
 
         if not self._jc_cache:
             # too soon: status not yet pulled somehow
@@ -102,7 +120,12 @@ class OSBeeAPI:
         return await self.async_apply_state()
 
     async def async_apply_state(self):
-        """Async entry point to set active zones."""
+        """Async entry point to set active zones.
+
+        Mostly used internally by async_turn_off(...), async_turn_on(...), this method applies the
+        desired state by generating the GET http://{IP}/cc to shut off all valves, or
+        http://{IP}/rp to run a manual program of the given valves.
+        """
 
         # firmware-1.0.0, part 11: Run Program (rp): http://devip/rp?dkey=xxx&pid=x&...
         # ...
