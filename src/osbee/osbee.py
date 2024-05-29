@@ -9,12 +9,19 @@ https://github.com/OpenSprinkler/OSBeeWiFi-Firmware/blob/master/docs/firmware1.0
 import aiohttp
 import logging
 from threading import Lock
+from typing import Awaitable, Callable, Optional, Dict, Any
 
 _LOGGER = logging.getLogger(__name__)
 
 
 class OSBeeAPI:
     """aiohttp facade for API requests to OSB Hub device."""
+
+    _host: str
+    _jc_cache: Optional[Dict[str, Any]]
+    _max_runtime: int
+    _session: aiohttp.ClientSession
+    _token: str
 
     def __init__(
         self, host: str, max_runtime: int, token: str, session: aiohttp.ClientSession
@@ -34,7 +41,7 @@ class OSBeeAPI:
             type(self._max_runtime),
         )
 
-    async def fetch_data(self, index):
+    async def fetch_data(self, index) -> str:
         """Get raw device state from the OSBee Hub via API.  No authentication yet considered.
 
         Essentially,the unprotected result of hitting your OSBee with GET http://{IP}/jc with a
@@ -73,7 +80,7 @@ class OSBeeAPI:
             self._jc_cache = jc_body
             return jc_body  # the resulting structure has no conventional "data" element, just raw JSON
 
-    async def async_turn_off(self, zone_id):
+    async def async_turn_off(self, zone_id) -> str:
         """Async entry point to deactivate the valve/relay for the zone.
 
         Based on the current status of the device, this method creates a new determination of
@@ -96,7 +103,7 @@ class OSBeeAPI:
 
         return await self.async_apply_state()
 
-    async def async_turn_on(self, zone_id):
+    async def async_turn_on(self, zone_id) -> str:
         """Async entry point to activate the valve/relay for the zone.
 
         Based on the current status of the device, this method creates a new determination of
@@ -119,13 +126,21 @@ class OSBeeAPI:
 
         return await self.async_apply_state()
 
-    async def async_apply_state(self):
+    async def async_apply_state(self) -> str:
         """Async entry point to set active zones.
 
         Mostly used internally by async_turn_off(...), async_turn_on(...), this method applies the
         desired state by generating the GET http://{IP}/cc to shut off all valves, or
         http://{IP}/rp to run a manual program of the given valves.
         """
+
+        # type-shuffle: assign a non-optional dict to satisfy type-hint
+        if self._jc_cache:
+            new_bitz: int = self._jc_cache["zbits"]  # bits: which valves are open
+        else:
+            raise Exception(  # pylint: disable=broad-exception-raised
+                "INTERNAL: async_apply_state is supposed to be gated from _jc_cache==None"
+            )
 
         # firmware-1.0.0, part 11: Run Program (rp): http://devip/rp?dkey=xxx&pid=x&...
         # ...
@@ -134,10 +149,9 @@ class OSBeeAPI:
         #  - dur=x: duration (in seconds)
         #  - Example: pid=77&zbits=3&dur=300 turns on zones 1 and 2 manually for 5 minutes
 
-        if self._jc_cache["zbits"] == 0:  # on zbits==0, we need to actually reset
+        if new_bitz == 0:  # on zbits==0, we need to actually reset
             url = f"http://{self._host}/cc?dkey={self._token}&reset=1"
         else:
-            new_bitz = self._jc_cache["zbits"]  # avoid triple-quoting
             url = f"http://{self._host}/rp?dkey={self._token}&pid=77&zbits={new_bitz}&dur={self._max_runtime}"
 
         async with self._session.get(url) as rp_request:
