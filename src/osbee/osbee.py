@@ -71,7 +71,7 @@ class OSBeeAPI:
                     f"Error connecting to OSBee Hub (HTTP/{jc_request.status or 'None'})"
                 )
 
-            jc_body = await jc_request.json(content_type="text/html")
+            jc_body = await jc_request.json(content_type=None)
             if len(jc_body) == 0:
                 raise Exception(  # pylint: disable=broad-exception-raised
                     "The server returned a zero-length body, not a valid response"
