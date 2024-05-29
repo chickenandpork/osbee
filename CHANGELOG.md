@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/chickenandpork/osbee/compare/v0.1.1...v0.2.0) (2024-05-29)
+
+
+### Features
+
+* provide an example to help test connectivity ([2d9a1e5](https://github.com/chickenandpork/osbee/commit/2d9a1e59617c5b8f9e1dd25ad1afccaed20a2423))
+
+
+### Bug Fixes
+
+* ignore content-type: do not fail on proper application/json ([6abdc66](https://github.com/chickenandpork/osbee/commit/6abdc66630d26a3da1dd450ebad65004bd88f2ce))
+
 ## [0.1.1](https://github.com/chickenandpork/osbee/compare/v0.1.0...v0.1.1) (2024-05-27)
 
 
