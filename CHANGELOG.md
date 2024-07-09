@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/chickenandpork/osbee/compare/v0.2.0...v0.3.0) (2024-07-09)
+
+
+### Features
+
+* export exception symbols ([0bd1954](https://github.com/chickenandpork/osbee/commit/0bd19547709f16561e043dc38d412d9abe4ce541))
+
 ## [0.2.0](https://github.com/chickenandpork/osbee/compare/v0.1.1...v0.2.0) (2024-05-29)
 
 
