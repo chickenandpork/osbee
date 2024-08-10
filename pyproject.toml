@@ -16,7 +16,8 @@ classifiers = [
 ]
 keywords = ["osbee", "opensprinkler"]
 # yup, pure bog-standard python
-dependencies = [ "aiohttp", "typing" ]
+# NOTE: we use tpying, but homeassistant has bombed that out in constraints.txt, so we cannot list it here
+dependencies = [ "aiohttp" ]
 #requires-python = ">=3.9"
 
 [project.optional-dependencies]
@@ -24,3 +25,10 @@ dev = [ "black" ]
 
 [project.urls]
 Homepage = "https://github.com/chickenandpork/osbee"
+Repository = "https://github.com/chickenandpork/osbee.git"
+Issues = "https://github.com/chickenandpork/osbee/issues"
+Changelog = "https://github.com/chickenandpork/osbee/blob/master/CHANGELOG.md"
+
+[tool.black]
+line-length = 100
+target-version = ['py39']
