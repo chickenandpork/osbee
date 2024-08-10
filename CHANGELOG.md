@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/chickenandpork/osbee/compare/v0.3.0...v0.3.1) (2024-08-10)
+
+
+### Bug Fixes
+
+* react to homeassistant bombing typing in constraints ([80f6559](https://github.com/chickenandpork/osbee/commit/80f6559548aef95eb16e712a05cc0fdafaabc1c1))
+
 ## [0.3.0](https://github.com/chickenandpork/osbee/compare/v0.2.0...v0.3.0) (2024-07-09)
 
 

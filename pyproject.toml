@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "osbee"
-version = "0.3.0"
+version = "0.3.1"
 description = "Connect to your OSBee 3-valve controller's REST API"
 readme = "README.md"
 authors = [{ name = "Allan Clark", email = "allanc@chickenandpork.com" }]
