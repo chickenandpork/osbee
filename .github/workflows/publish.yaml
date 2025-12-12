@@ -26,7 +26,7 @@ jobs:
       - name: Build a wheel and source tarball
         run: python3 -m build
       - name: Store the distribution packages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: python-package-distributions
           path: dist/
@@ -56,7 +56,7 @@ jobs:
       - name: Download artifacts
         id: download
         if: ${{ steps.release.outputs.release_created }}
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v7
         with:
           merge-multiple: true
           name: python-package-distributions
@@ -85,7 +85,7 @@ jobs:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
     steps:
       - name: Download all the dists
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v7
         with:
           name: python-package-distributions
           path: dist/
