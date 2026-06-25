@@ -43,7 +43,7 @@ jobs:
       pull-requests: write  # Able to manage a release PR
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@f3969c04a4ec81d7a9aa4010d84ae6a7602f86a7 # v4.1.1
+      - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4.4.1
         # Settings -> Actions -> General -> Workflow Permissions
         # - select "Read repo contents", and
         # - enable "Allow Github Actions to create and approve pull requests"
