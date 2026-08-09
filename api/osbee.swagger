@@ -1,0 +1,59 @@
+---
+swagger: "2.0"
+info:
+  description: "OSBee 3.0 (osbee.opensprinkler.com) API."
+  version: "1.0.0"
+  title: "OSBee API"
+  contact:
+    email: "chickenandporn@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "10.0.0.240"
+schemes:
+- "http"
+paths:
+  /rp:
+    get:
+      summary: "Run a Program: Quick or Pre-Programmed"
+      description: ""
+      parameters:
+      - in: query
+        type: integer
+        name: "pid"
+        description: "Program ID; use `81` for a quick-program"
+        required: true
+      - in: query
+        type: array
+        name: "durs"
+        description: "Array of 1-3 durations (sec), as `[30]`, or `[30,30,60]` -- this would be an array-style nested value but the '[' is not supported by Swagger.  When using `curl` to test, use `durs=\\[...\\]` "
+        required: true
+        collectionFormat: csv
+        items:
+          type: integer
+      responses:
+        "200":
+          description: "Maybe valid input: check `result==1` for success"
+          schema:
+            $ref: "#/definitions/Result"
+      security:
+      - dkey: []
+securityDefinitions:
+  dkey:
+    type: "apiKey"
+    name: "dkey"
+    in: "query"
+definitions:
+  Result:
+    type: "object"
+    properties:
+      result:
+        type: "integer"
+        enum: 
+        - 1
+        - 16
+        - 17
+        description: >
+          A return-code for the option attempted: 1 : OK; 2-15: unknown;  16: parameter (given in `item`) is missing; 17: parameter (given in `item`) is incorrect
+      item:
+        type: "string"
